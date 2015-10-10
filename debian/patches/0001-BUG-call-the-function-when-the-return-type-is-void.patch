@@ -1,0 +1,30 @@
+From a224b6edd654ac741af3ea7ca5eb282198e3f5c6 Mon Sep 17 00:00:00 2001
+From: Vincent Danjean <Vincent.Danjean@ens-lyon.org>
+Date: Sat, 6 Jun 2015 18:05:23 +0200
+Subject: [PATCH] [BUG] call the function when the return type is void
+
+Before this patch, clSVMFree was never called...
+---
+ icd_generator.rb | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+--- a/icd_generator.rb
++++ b/icd_generator.rb
+@@ -574,12 +574,13 @@
+       error_handler.call
+       ocl_icd_loader_gen_source += "  }\n"
+       if return_type != "void" then
+-        ocl_icd_loader_gen_source += "  RETURN(((struct _#{fps[0]} *)#{fps[1]})->dispatch->#{func_name}("
+-        ocl_icd_loader_gen_source += ps.join(", ")
+-        ocl_icd_loader_gen_source += "));\n"
++        return_debug="RETURN"
+       else
+-        ocl_icd_loader_gen_source += "  return;"
++        return_debug="return"
+       end
++      ocl_icd_loader_gen_source += "  #{return_debug}(((struct _#{fps[0]} *)#{fps[1]})->dispatch->#{func_name}("
++      ocl_icd_loader_gen_source += ps.join(", ")
++      ocl_icd_loader_gen_source += "));\n"
+       ocl_icd_loader_gen_source += "}\n\n"
+     }
+     ocl_icd_loader_gen_source += "#pragma GCC visibility push(hidden)\n\n"

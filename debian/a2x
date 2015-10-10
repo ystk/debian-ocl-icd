@@ -1,0 +1,6 @@
+#!/bin/sh
+CHANGELOG="$(dirname "$0")/changelog"
+DATE_CHANGELOG="$(dpkg-parsechangelog -l"$CHANGELOG" --show-field Date)"
+DATE="$(date --utc -d "$DATE_CHANGELOG" --rfc-3339 second )"
+set -x
+exec faketime -f "$DATE" a2x "$@"

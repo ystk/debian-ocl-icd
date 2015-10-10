@@ -1,0 +1,236 @@
+ocl-icd (2.2.3-1+deb8u1) jessie; urgency=medium
+
+  * Fix "clSVMFree never called in OpenCL ICD" (Closes: #787941)
+    The patch is backported from upstream
+  * ocl-icd-opencl-dev: Bump the Breaks/Replaces on nvidia-libopencl1 to
+    cover new upstream releases of nvidia-graphics-drivers (304.xx legacy
+    series) in wheezy (backported patch from sid by Andreas Beckmann in
+    #787952)
+
+ -- Vincent Danjean <vdanjean@debian.org>  Thu, 11 Jun 2015 16:25:49 +0200
+
+ocl-icd (2.2.3-1) unstable; urgency=medium
+
+  * New upstream release
+    + really fix problem when building ICD with OpenCL headers < 2.0
+
+ -- Vincent Danjean <vdanjean@debian.org>  Sun, 05 Oct 2014 17:07:08 +0200
+
+ocl-icd (2.2.2-1) unstable; urgency=medium
+
+  * New upstream release
+    + fix problem when building ICD with OpenCL headers < 2.0
+
+ -- Vincent Danjean <vdanjean@debian.org>  Sun, 05 Oct 2014 11:22:12 +0200
+
+ocl-icd (2.2.1-1) unstable; urgency=medium
+
+  * New upstream release
+    + add support for OpenCL 2.0 ICD
+    + do not depends on system OpenCL headers for compilation
+
+ -- Vincent Danjean <vdanjean@debian.org>  Wed, 01 Oct 2014 15:04:09 +0200
+
+ocl-icd (2.1.3-5) unstable; urgency=medium
+
+  * move libOpenCL.so from runtime to devel package. Add a NEWS file for it
+    (Closes: #679228, #755513)
+  * Fix "[ocl-icd-libopencl1] Broken symbols file": all dependencies on virtual
+    packages propose the real package as first alternative to avoid random
+    installation of non-free libraries (Closes: #739409)
+  * Apply patches provided by Aaron Watry (Closes: #743607)
+
+ -- Vincent Danjean <vdanjean@debian.org>  Thu, 10 Apr 2014 21:53:41 +0200
+
+ocl-icd (2.1.3-4) unstable; urgency=medium
+
+  * a2x also use current date. Run it under faketime as asciidoc
+    (Closes: #733033)
+  * add versioned build-depends on dpkg-dev due to the use of the
+    --show-field option in dpkg-parsechangelog (Closes: #733620)
+
+ -- Vincent Danjean <vdanjean@debian.org>  Thu, 06 Feb 2014 23:23:27 +0100
+
+ocl-icd (2.1.3-3) unstable; urgency=medium
+
+  * fix default dependency model in ocl-icd-libopencl1.symbols as it is always
+    used by dpkg-shlibdeps (even if no symbols use it). See #737731 for more
+    information.
+  * dump Standard-Version (no change needed)
+
+ -- Vincent Danjean <vdanjean@debian.org>  Wed, 05 Feb 2014 23:57:01 +0100
+
+ocl-icd (2.1.3-2) unstable; urgency=medium
+
+  * Run asciidoc under faketime (Closes: #733033)
+    Manpages will have as generated date the date of the last changelog entry
+
+ -- Vincent Danjean <vdanjean@debian.org>  Tue, 24 Dec 2013 14:23:57 +0100
+
+ocl-icd (2.1.3-1) unstable; urgency=medium
+
+  * New upstream release
+    + fix several NULL pointer handlings by selecting default objects
+      (Closes: #727134)
+  * Use autoreconf instead of autotools-dev (Closes: #732821)
+    Thanks Wookey for reporting the bug and providing the patch
+  * Fix autotools issue (the fix was in experimental for several
+    releases but the bug was not closed)
+    Closes: #713333
+
+ -- Vincent Danjean <vdanjean@debian.org>  Sun, 22 Dec 2013 14:26:39 +0100
+
+ocl-icd (2.1.2-1) experimental; urgency=low
+
+  * New upstream realease
+    Really fix "Another NULL pointer dereference"
+
+ -- Vincent Danjean <vdanjean@debian.org>  Wed, 23 Oct 2013 12:32:13 +0200
+
+ocl-icd (2.1.1-1) unstable; urgency=low
+
+  * New upstream realease
+    Fix "Another NULL pointer dereference" (Closes: #727134)
+
+ -- Vincent Danjean <vdanjean@debian.org>  Tue, 22 Oct 2013 21:26:15 +0200
+
+ocl-icd (2.1.0-1) experimental; urgency=low
+
+  * New upstream release
+    + do not segfault when invalid NULL arguments are passed
+    + fix "Handle invalid object references" (Closes: #724808)
+  * Fix "no include guards in ocl_icd.h" (fixed in upstream 2.0.4)
+    (Closes: #712801)
+  * upload to experimental until all OpenCL package are checked
+    wrt the new virtual packages
+
+ -- Vincent Danjean <vdanjean@debian.org>  Wed, 02 Oct 2013 14:45:18 +0200
+
+ocl-icd (2.0.4-2) unstable; urgency=low
+
+  * rewrite dependencies from symbols file according to the discussion
+    on the pkg-opencl-devel@lists.alioth.debian.org ML
+
+ -- Vincent Danjean <vdanjean@debian.org>  Thu, 25 Jul 2013 09:15:47 +0200
+
+ocl-icd (2.0.4-1) unstable; urgency=low
+
+  * new upstream release
+    + Include guard for ocl_icd.h
+    + Fix configure.ac for automake 1.13
+  * [debian/control]
+    + bump Standards-Version (no change needed)
+    + fix git URLs
+  * Implements versonned virtual packages (opencl-1.1 and opencl-1.2)
+
+ -- Vincent Danjean <vdanjean@debian.org>  Wed, 24 Jul 2013 11:10:44 +0200
+
+ocl-icd (2.0.2-1) experimental; urgency=low
+
+  * New upstream release
+    Fix "FTBFS at FAIL: tests/03-check-own-ICD-loader.sh" (Closes: #700398)
+  * ocl-icd-opencl-dev now ensures that ocl-icd-libopencl1 is installed.
+    + programs that wants any OpenCL dev environment should install the
+      opencl-dev virtual package
+    + programs that wants ocl-icd loader and its features (.pc file,
+      avaibility to select an ICD without root privilege, ...) can depends on
+      this package.
+    Closes: #698520
+
+ -- Vincent Danjean <vdanjean@debian.org>  Tue, 12 Feb 2013 11:36:03 +0100
+
+ocl-icd (2.0.1-1) experimental; urgency=low
+
+  * New upstream release
+    + fix documentation
+  * Add doc-base registration
+
+ -- Vincent Danjean <vdanjean@debian.org>  Fri, 14 Sep 2012 10:55:21 +0200
+
+ocl-icd (2.0-1) experimental; urgency=low
+
+  * New upstream release
+    + manpage added
+    + extended usage of OCL_ICD_VENDORS
+    + one more OpenCL function in the structure
+
+ -- Vincent Danjean <vdanjean@debian.org>  Thu, 13 Sep 2012 17:22:53 +0200
+
+ocl-icd (1.3-3) unstable; urgency=low
+
+  * backport fix from 1.4 release
+    + fix version in OpenCL.pc file
+    + fix 3 initialization bugs
+    + fix NULL allowed argument in clCreateContextFromType
+
+ -- Vincent Danjean <vdanjean@debian.org>  Fri, 31 Aug 2012 00:46:47 +0200
+
+ocl-icd (1.3-2) unstable; urgency=low
+
+  * rewrote relationships after thinking about OpenCL in Debian
+  * in particular, move the .so from -dev to -libopencl1 in order
+    to support programs created with the Intel SDK
+
+ -- Vincent Danjean <vdanjean@debian.org>  Tue, 26 Jun 2012 02:01:20 +0200
+
+ocl-icd (1.3-1) unstable; urgency=low
+
+  * New upstream release
+  * add ocl-icd.pc in the ocl-icd-dev package
+
+ -- Vincent Danjean <vdanjean@debian.org>  Sun, 24 Jun 2012 13:59:06 +0200
+
+ocl-icd (1.2.1-1) unstable; urgency=low
+
+  * New upstream release
+  * add ocl-icd-opencl-dev package that will be need to compile
+    opencl programs.
+
+ -- Vincent Danjean <vdanjean@debian.org>  Wed, 20 Jun 2012 14:09:14 +0200
+
+ocl-icd (1.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Vincent Danjean <vdanjean@debian.org>  Thu, 14 Jun 2012 01:12:22 +0200
+
+ocl-icd (1.0.1-2) unstable; urgency=low
+
+  * Fix "implicit declarations of exit, malloc, and free (all from
+    <stdlib.h>)" in test program (Closes: #676677)
+
+ -- Vincent Danjean <vdanjean@debian.org>  Fri, 08 Jun 2012 22:32:00 +0200
+
+ocl-icd (1.0.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Vincent Danjean <vdanjean@debian.org>  Wed, 06 Jun 2012 16:50:19 +0200
+
+ocl-icd (1.0-1) unstable; urgency=low
+
+  * Initial Debian release. (Closes: #675528: ITP: ocl-icd -- Generic OpenCL
+    ICD Loader)
+  * New upstream release
+  * Cleanup packaging
+  * Debian/control: downgrade Recommends to Suggests for opencl-icd
+    In wheezy, no free implementation of opencl-icd is available,
+    this package will mostly be interresting for developers of
+    free OpenCL ICD (pocl, ...)
+    After wheezy (or perhaps even for wheezy if pocl can be soon packaged)
+    I will switch back to Recommends and this package will be useful
+    for OpenCL *programs* in main.
+
+ -- Vincent Danjean <vdanjean@debian.org>  Wed, 06 Jun 2012 16:21:53 +0200
+
+ocl-icd (1.0~beta2-1) unstable; urgency=low
+
+  * New beta
+
+ -- Vincent Danjean <vdanjean@debian.org>  Fri, 01 Jun 2012 20:15:31 +0200
+
+ocl-icd (1.0~beta1-1) UNRELEASED; urgency=low
+
+  * Initial release
+
+ -- Vincent Danjean <vdanjean@debian.org>  Fri, 01 Jun 2012 15:50:43 +0200
