@@ -1,0 +1,30 @@
+# We use alternative dependencies:
+# * the first one (default one) is for symbols specific to this implementation
+#   There should be none
+# * the following ones are for symbols from OpenCL 1.0, 1.1 and 1.2
+#   They all provoke a dependency against two virtual packages: the "libopencl"
+#   one and and versionned virtual package "libopencl-VERSION-1" (the last -1
+#   is the soname of current libopencl)
+#   Note: as OpenCL 1.0 does not really support ICD and as OpenCL 1.1 is
+#     supported by all current implementation, OpenCL 1.0 and 1.1 are merged
+#     with respect to dependencies
+#   Note bis: #MINVER# is used with the real package, however, as ocl-icd-libopencl1
+#     provides the virtual packages, this version enforcement is purely cosmetic
+#   Note ter: the alternative "ocl-icd-libopencl1 | libopencl1" is used so
+#     that, by default, the free ICD Loader will be installed on a Debian system
+#     We use it on all parts as dependencies can be reordered (see #739409)
+#   Note quattro: the first (default) dependency is in fact always added
+#     (see #737731) by dpkg-shlibdeps so we need a " | libopencl1"
+#   Note
+libOpenCL.so.1 #PACKAGE# #MINVER# | libopencl1
+| #PACKAGE# #MINVER# | libopencl-1.1-1
+| #PACKAGE# #MINVER# | libopencl-1.2-1
+| #PACKAGE# #MINVER# | libopencl-2.0-1
+| #PACKAGE# #MINVER# | libopencl-2.1-1
+# As ocl-icd use versionned symbols, we use this information instead of
+# listing all symbols.
+ (symver|optional)OPENCL_1.0 1.0 1
+ (symver|optional)OPENCL_1.1 1.0 1
+ (symver|optional)OPENCL_1.2 1.0 2
+ (symver|optional)OPENCL_2.0 2.2.0 3
+ (symver|optional)OPENCL_2.1 2.2.8 4
